@@ -1,0 +1,31 @@
+Rubric for Planner Project
+
+(1) Rubric turned in on time (5 points)
+
+(2) Languages/Frameworks used (20 points)
+10 - Learned/Used React.js frontend
+10 - Express(Node.js) backend
+0 - MySQL Database
+
+(3) Functionality (45 points)
+5 - users can register, login, and logout
+5 - upon login, the user will be zoomed in on "today" which is the actual date
+5 - user can navigate to any day
+8 - user can add a question/answer item
+3 - todo list item can be added
+3 - todo list item can be deleted
+3 - todo list item can be edited
+5 - todo list item can be repeated every x number of days, where the user chooses x
+3 - todo list item can be marked completed
+5 - database contains users, items, and any tables necessary (with the necesssary columns and column types) to maintain the above functionalities
+
+(4) Best Practices (5 points)
+3 - Code is readable and well formatted
+2  - All pages pass the html validator
+
+(5) Creative Portion (20 points)
+
+(6) Styling (5 points)
+5  - Use of animations
+
+10:21 AM, Jeong Min Lim, Nov 23rd 2020
