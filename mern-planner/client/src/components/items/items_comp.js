@@ -20,6 +20,12 @@ class Items extends Component {
         return (
             <div>
             <h2>Items</h2>
+            <ul>
+                {this.state.items.map(
+                    item => 
+                    <li key={item._id}>{item.name} {item.date}</li>
+                )}
+            </ul>
             </div>
         );
     }
