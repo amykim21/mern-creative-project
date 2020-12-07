@@ -12,10 +12,17 @@ import Items from './components/items/items_comp';
 // }
 
 class App extends Component {
+
+
+  componentDidMount() {
+    // this.addItem();
+  }
+
   render() {
       return (
     <div className="App">
-      <h1>Hello</h1>
+      <h1>Planner</h1>
+      
       <Items></Items>
     </div>
   );

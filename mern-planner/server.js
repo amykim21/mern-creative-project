@@ -3,21 +3,28 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const items = require('./routes/api/items');
+const itemsRouter = require('./routes/api/items');
 
 const app = express();
 
-// Bodyparser Middleware
-app.use(bodyParser.json());
+// cors
+var cors = require('cors');
 
-const db = require('./config/keys').mongoURI;
+// use it before all route definitions
+app.use(cors({origin: '*'}));
+// cors
+
+// Bodyparser Middleware
+app.use(bodyParser.json()); // app.use() adds a middleware layer
+
+const db = require('./config/keys').mongoURI; // mongodb://localhost:27017/planner_db
 
 mongoose.connect(db)
 .then(() => console.log('MongoDB connected...'))
 .catch(err => console.log(err));
 
 // Use Routes
-app.use('/api/items', items);
+app.use('/api/items', itemsRouter); // function executed for any type of http request on /api/items
 
 const port = 5000;
 

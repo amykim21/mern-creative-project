@@ -15,17 +15,17 @@ router.get('/', (req, res) => {
 
 // POST request to api/items
 // Create an item
-router.post('/', (req, res) => {
-    const dummy = new Item({
+router.post('/insert', (req, res) => { // Amy: changed '/' --> '/insert'
+    const newItem = new Item({
         name: req.body.name // name comes from the body of the request
     });
 
-    dummy.save().then(item => res.json(item));
+    newItem.save().then(item => res.json(item));
 });
 
 // DELETE request to api/items/:id
 // Delete an item
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => { // Amy : changed '/:id' --> '/delete/:id'
     Item.findById(req.params.id)
     .then(item => item.remove().then(() => res.json({success: true})))
     .catch(err => res.status(404).json({success: false})); // try to delete id that doesn't exist
