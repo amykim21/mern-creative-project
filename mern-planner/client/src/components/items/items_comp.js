@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
 import './items_comp.css';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Item from '../../material-ui/card.jsx';
+
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+      },
+    item: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+  });
 
 // citation: https://www.youtube.com/watch?v=v0t42xBIYIs&t=1159s
 class Items extends Component {
@@ -37,19 +52,60 @@ class Items extends Component {
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
             <div>
             <h2>Items</h2>
             <button onClick={this.addItem}>Add Item</button>
-            <ul>
+            <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            spacing={2}
+            >
+                {this.state.items.map(
+                    item =>
+                    <Grid item xs={12}>
+                    <Item></Item>
+                    {/* <Item className={classes.item} key={item._id}>{item.name} {item.date}</Item> */}
+                    </Grid>
+                    // <li key={item._id}>{item.name} {item.date}</li>
+                )}
+                {/* <Grid item xs={12}>
+                <Item className={classes.item}></Item>
+                </Grid>
+                <Grid item xs={12}>
+                <Item></Item>
+                </Grid> */}
+            {/* <Item></Item>
+            <Item></Item> */}
+            </Grid>
+            {/* <ul>
                 {this.state.items.map(
                     item => 
                     <li key={item._id}>{item.name} {item.date}</li>
                 )}
-            </ul>
+            </ul> */}
             </div>
         );
     }
+
+    // render() {
+    //     return (
+    //         <div>
+    //         <h2>Items</h2>
+    //         <button onClick={this.addItem}>Add Item</button>
+    //         <ul>
+    //             {this.state.items.map(
+    //                 item => 
+    //                 <li key={item._id}>{item.name} {item.date}</li>
+    //             )}
+    //         </ul>
+    //         </div>
+    //     );
+    // }
   
 }
 

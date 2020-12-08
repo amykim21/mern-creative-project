@@ -14,9 +14,14 @@
   "author": "Amy Kim",
   "license": "ISC",
   "dependencies": {
+    "@date-io/date-fns": "^1.3.13",
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/pickers": "^3.2.10",
     "body-parser": "^1.19.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
+    "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",
     "mongoose": "^5.11.4"
   },
