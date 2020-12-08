@@ -68,8 +68,8 @@ class Items extends Component {
                 {this.state.items.map(
                     item =>
                     <Grid item xs={12}>
-                    <Item></Item>
-                    {/* <Item className={classes.item} key={item._id}>{item.name} {item.date}</Item> */}
+                    <Item key={item._id} item={item}></Item>
+                    {/* <Item className={classes.item} key={item._id} item={item}>{item.name} {item.date}</Item> */}
                     </Grid>
                     // <li key={item._id}>{item.name} {item.date}</li>
                 )}
