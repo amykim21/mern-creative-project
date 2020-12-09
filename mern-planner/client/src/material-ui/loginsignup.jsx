@@ -61,12 +61,24 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginSignup() {
   const classes = useStyles();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginUsername, setLoginUsername] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const [signupUsername, setSignupUsername] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
 
   const login = (e) => {
     e.preventDefault();
-    console.log("e.target.value: " + e.target.value);
+    
+    console.log("username: " + loginUsername);
+    console.log("pw:" + loginPassword);
+    // console.log("e.target.value: " + e.target.value);
+  }
+
+  const signup = (e) => {
+    e.preventDefault();
+
+
   }
 
 
@@ -93,6 +105,7 @@ export default function LoginSignup() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setLoginUsername(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -104,6 +117,7 @@ export default function LoginSignup() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setLoginPassword(e.target.value)}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -145,7 +159,7 @@ export default function LoginSignup() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={signup} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -156,6 +170,7 @@ export default function LoginSignup() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setSignupUsername(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -167,6 +182,7 @@ export default function LoginSignup() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setSignupPassword(e.target.value)}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
