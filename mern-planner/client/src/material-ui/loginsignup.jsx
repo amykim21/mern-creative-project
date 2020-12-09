@@ -1,5 +1,6 @@
 // citation: https://material-ui.com/getting-started/templates/
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom"; // for redirecting to home page after login/signup
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -61,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginSignup() {
   const classes = useStyles();
 
+  const history = useHistory();
+
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -69,6 +72,15 @@ export default function LoginSignup() {
 
   const login = (e) => {
     e.preventDefault();
+
+    // redirect to / page if user successfully logs in
+    if(true) {
+      history.push('/');
+    } else {
+
+    }
+    
+    
     
     console.log("username: " + loginUsername);
     console.log("pw:" + loginPassword);
