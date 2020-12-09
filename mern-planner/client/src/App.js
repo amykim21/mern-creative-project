@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Items from './components/items/items_comp';
+import LoginSignup from './material-ui/loginsignup.jsx'
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -70,20 +72,27 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.addItem();
+    // LoginSignup
   }
   
 
   render() {
     const { classes } = this.props;
-      return (
-        <div className={classes.root}>
+    return (
+      <div className={classes.root}>
+        <Router>
           <Header></Header>
           <h1>Planner</h1>
-          
-          <Items></Items>
-        </div>
-      );
+          <Route exact path="/login_signup">
+            <LoginSignup></LoginSignup>
+          </Route>
+          <Route exact path="/">
+            <Items></Items>
+          </Route>
+          {/* <Items user_id="Amy"></Items> */}
+        </Router>
+      </div>
+    );
   }
 }
 

@@ -23,7 +23,8 @@
     "cors": "^2.8.5",
     "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.4"
+    "mongoose": "^5.11.4",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
