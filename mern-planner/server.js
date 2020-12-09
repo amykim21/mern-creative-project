@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const itemsRouter = require('./routes/api/items');
+const authRouter = require('./routes/api/auth');
 
 const app = express();
 
@@ -25,9 +26,14 @@ mongoose.connect(db)
 
 // Use Routes
 app.use('/api/items', itemsRouter); // function executed for any type of http request on /api/items
+// end of citation
+
+// authentication
+app.use('/api/auth', authRouter);
 
 const port = 5000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
-// end of citation
+
+

@@ -81,7 +81,7 @@ export default function LoginSignup() {
         loginPassword
       }),
       headers: { 'Content-Type': 'application/json' },
-    }) // localhost part not necessary because of proxy in package.json
+    })
     .then(res => res.json())
     .then(res => {
       if(res.success) {
@@ -98,7 +98,25 @@ export default function LoginSignup() {
   const signup = (e) => {
     e.preventDefault();
 
-
+    fetch('/api/auth/signup', { // http://localhost:5000/api/auth/signup
+      method: 'POST',
+      body: JSON.stringify({
+        signupUsername,
+        signupPassword
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => res.json())
+    // .then(res => {
+    //   if(res.success) {
+    //     history.push('/');
+    //   } else {
+    //     console.log("signup failed");
+    //   }
+    // })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
 

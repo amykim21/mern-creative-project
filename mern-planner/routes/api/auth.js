@@ -7,7 +7,8 @@ const router = express.Router();
 // !! SyntaxError: Cannot use import statement outside a module
 
 // Item Model
-const User = require('../../models/User');
+const { User, Items } = require('../../models/User');
+// const User = require('../../models/User');
 
 // insert to Items where userId = userId from req.body
 // router.post('/insert', (req, res) => {
@@ -33,31 +34,24 @@ router.post('/login', (req, res) => {
         } else {
             res.json({success: true});
         }
-    });
+    })
+    .catch(err => res.status(404).json({success: false}));
 
 
     console.log("username: " + req.body.loginUsername);
     console.log("pw: " + req.body.loginPassword);
-    // res.send({message: "inside /login"});
-    // const { username, password } = req.body;
-    // User.findOne({username: username, password: password})
-    // .then(user => {
-    //     if(user == null) {
-    //         // redirect to planner page
-    //         console.log("user not found");
-    //     } else {
-    //         // refresh auth page
-    //         console.log("login success");
-    //     }
-    //     // res.json(user)
-    // })
-    // .catch(err => res.status(404).json({success: false}));
 });
 
 // signup
 // POST request to api/auth
 router.post('/signup', (req, res) => {
+    const newUser = new User({
+        username: req.body.signupUsername,
+        password: req.body.signupPassword
+    });
 
+    // todo: if same username/password exists, don't add to db
+    newUser.save().then(user => res.json(user));
 });
 
 // POST request to api/items
