@@ -74,6 +74,24 @@ export default function LoginSignup() {
     e.preventDefault();
 
     // redirect to / page if user successfully logs in
+    fetch('/api/auth/login', { // http://localhost:5000/api/auth/login
+      method: 'POST',
+      body: JSON.stringify({
+        loginUsername,
+        loginPassword
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    }) // localhost part not necessary because of proxy in package.json
+    .then(res => res.json())
+    .catch(err => {
+      console.log(err);
+    });
+    // .then(item => {
+    //     let newItems = [...this.state.items];
+    //     newItems.push(item);
+    //     this.setState({items: newItems});
+    //     console.log('Items fetched...', item);
+    // });
     if(true) {
       history.push('/');
     } else {
