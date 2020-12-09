@@ -83,26 +83,16 @@ export default function LoginSignup() {
       headers: { 'Content-Type': 'application/json' },
     }) // localhost part not necessary because of proxy in package.json
     .then(res => res.json())
+    .then(res => {
+      if(res.success) {
+        history.push('/');
+      } else {
+        console.log("login failed");
+      }
+    })
     .catch(err => {
       console.log(err);
     });
-    // .then(item => {
-    //     let newItems = [...this.state.items];
-    //     newItems.push(item);
-    //     this.setState({items: newItems});
-    //     console.log('Items fetched...', item);
-    // });
-    if(true) {
-      history.push('/');
-    } else {
-
-    }
-    
-    
-    
-    console.log("username: " + loginUsername);
-    console.log("pw:" + loginPassword);
-    // console.log("e.target.value: " + e.target.value);
   }
 
   const signup = (e) => {
