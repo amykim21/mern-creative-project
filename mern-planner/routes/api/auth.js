@@ -7,8 +7,8 @@ const router = express.Router();
 // !! SyntaxError: Cannot use import statement outside a module
 
 // Item Model
-const { User, Items } = require('../../models/User');
-// const User = require('../../models/User');
+// const { User, Items } = require('../../models/User');
+const User = require('../../models/User');
 
 // insert to Items where userId = userId from req.body
 // router.post('/insert', (req, res) => {

@@ -9,6 +9,12 @@ import { withStyles } from '@material-ui/core/styles';
 
 // import { makeStyles } from '@material-ui/core/styles';
 import Header from './material-ui/appbar.jsx';
+
+export const UserContext = React.createContext({
+  username: "default",
+  setUsername: () => {}
+}); // for passing user information throughout pages
+
 // import Item from './material-ui/card.jsx';
 // import Grid from '@material-ui/core/Grid';
 
@@ -67,14 +73,16 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-       
+       username: "",
+       setUsername: (username) => {
+        console.log("inside setUsername"); 
+        this.setState({...this.state, username: username})}
     }
   }
 
   componentDidMount() {
     // LoginSignup
   }
-  
 
   render() {
     const { classes } = this.props;
@@ -83,12 +91,15 @@ class App extends Component {
         <Router>
           <Header></Header>
           <h1>Planner</h1>
+          <UserContext.Provider
+          value={this.state}>
           <Route exact path="/login_signup">
             <LoginSignup></LoginSignup>
           </Route>
           <Route exact path="/">
-            <Items></Items>
+            <Items username=""></Items> {/* todo: send username to Items component */}
           </Route>
+          </UserContext.Provider>
           {/* <Items user_id="Amy"></Items> */}
         </Router>
       </div>
@@ -100,3 +111,4 @@ class App extends Component {
 // citation: https://stackoverflow.com/questions/56554586/how-to-use-usestyle-to-style-class-component-in-material-ui
 export default withStyles(styles)(App);
 // end of citation
+

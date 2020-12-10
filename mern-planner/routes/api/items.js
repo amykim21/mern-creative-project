@@ -32,6 +32,14 @@ router.post('/insert', (req, res) => {
     .catch(err => res.status(404).json({success: false}));
 });
 
+router.post('/', (req, res) => {
+    User.findOne({username: req.body.username })
+    .then(user => {
+        res.json(user.items);
+    })
+    .catch(err => res.status(404).json({success: false}));
+});
+
 
 // User Model
 // import { User, Items } from '../../models/User'; // new schema
