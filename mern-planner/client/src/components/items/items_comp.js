@@ -49,7 +49,7 @@ export default function Items() {
         .then(item => {
             // let newItems = items;
             // newItems.push(item);
-            setItems(newItems);
+            setItems([...newItems]);
             console.log('Item added...', item);
         })
         .catch(err => {
@@ -74,7 +74,7 @@ export default function Items() {
             console.log("Items fetched...", dbItems);
         })
         .catch(err => console.log(err));
-    }, [items]);
+    }, []);
     // reference: https://stackoverflow.com/questions/53243203/react-hook-useeffect-runs-continuously-forever-infinite-loop
 
 
