@@ -32,13 +32,20 @@ router.post('/insert', (req, res) => {
     .catch(err => res.status(404).json({success: false}));
 });
 
-router.post('/', (req, res) => {
-    User.findOne({username: req.body.username })
+router.get('/', (req, res) => {
+    User.findOne({username: req.headers.username })
     .then(user => {
         res.json(user.items);
     })
     .catch(err => res.status(404).json({success: false}));
 });
+// router.post('/', (req, res) => {
+//     User.findOne({username: req.body.username })
+//     .then(user => {
+//         res.json(user.items);
+//     })
+//     .catch(err => res.status(404).json({success: false}));
+// });
 
 
 // User Model

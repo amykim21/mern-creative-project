@@ -103,7 +103,7 @@ export default function LoginSignup() {
   const signup = (e) => {
     e.preventDefault();
 
-    fetch('/api/auth/signup', { // http://localhost:5000/api/auth/signup
+    fetch('http://localhost:5000/api/auth/signup', { // http://localhost:5000/api/auth/signup
       method: 'POST',
       body: JSON.stringify({
         signupUsername,

@@ -59,11 +59,14 @@ export default function Items() {
 
     useEffect(() => {
         console.log("inside useEffect");
-        const body = { username: username };
-        fetch('/api/items', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' },
+        // const body = { username: username };
+        fetch('http://localhost:5000/api/items', {
+            method: 'GET',
+            // body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json',
+                username: username
+            },
         })
         .then(res => res.json())
         .then(dbItems => {
