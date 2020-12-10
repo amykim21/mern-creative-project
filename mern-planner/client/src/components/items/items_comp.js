@@ -71,7 +71,8 @@ export default function Items() {
             console.log("Items fetched...", dbItems);
         })
         .catch(err => console.log(err));
-    });
+    }, [items]);
+    // reference: https://stackoverflow.com/questions/53243203/react-hook-useeffect-runs-continuously-forever-infinite-loop
 
 
 
@@ -94,12 +95,12 @@ export default function Items() {
             alignItems="center"
             spacing={2}
             >
-                {/* {this.state.items.map(
+                {items.map(
                     item =>
                     <Grid key={item._id} item xs={12}>
                     <Item key={item._id} item={item}></Item>
                     </Grid>
-                )} */}
+                )}
 
             </Grid>
 
