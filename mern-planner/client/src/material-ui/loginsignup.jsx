@@ -61,12 +61,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginSignup() {
+export default function LoginSignup(props) {
   const classes = useStyles();
 
   const history = useHistory();
 
-  const { username, setUsername } = useContext(UserContext);
+  // const { username, setUsername } = useContext(UserContext);
 
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -89,7 +89,8 @@ export default function LoginSignup() {
     .then(res => res.json())
     .then(res => {
       if(res.success) {
-        setUsername(loginUsername);
+        // setUsername(loginUsername);
+        props.setUsername(loginUsername);
         history.push('/');
       } else {
         console.log("login failed");

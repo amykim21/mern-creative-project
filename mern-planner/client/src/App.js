@@ -74,15 +74,101 @@ class App extends Component {
     super();
     this.state = {
        username: "",
-       setUsername: (username) => {
-        console.log("inside setUsername"); 
-        this.setState({...this.state, username: username})}
+       items: [],
+      //  setUsername: (username) => {
+      //   console.log("inside setUsername"); 
+      //   this.setState({/*...this.state, */username: username, setUsername: this.state.setUsername})
+      // }
     }
+    this.setUsername = this.setUsername.bind(this);
+    this.setItems = this.setItems.bind(this);
+    this.addItem = this.addItem.bind(this);
   }
 
-  componentDidMount() {
-    // LoginSignup
+  // componentWillMount
+
+  // componentDidMount, call setUsername
+
+  // or stop page from refreshing
+
+  setUsername(username) {
+    console.log("setusername");
+    // this.setState({username: username, items: this.state.items});
+    fetch('/api/items', {
+            method: 'GET',
+            // body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json',
+                username: username
+            },
+        })
+        .then(res => res.json())
+        .then(dbItems => {
+          this.setState({ username: username, items: dbItems });
+          console.log("Items fetched...", dbItems);
+        })
+        .catch(err => console.log(err));
+      
   }
+
+  setItems(items) {
+    this.setState({username: this.state.username, items: items});
+  }
+
+  // componentDidMount() {
+  //   console.log("compdidmount");
+    // if(this.state.username !== "") {
+    //   console.log("inside if");
+    // GET request
+    // fetch('http://localhost:5000/api/items', {
+    //         method: 'GET',
+    //         // body: JSON.stringify(body),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             username: this.state.username
+    //         },
+    //     })
+    //     .then(res => res.json())
+    //     .then(dbItems => {
+    //       this.setState({ username: this.state.username, items: dbItems });
+    //       console.log("Items fetched...", dbItems);
+    //     })
+    //     .catch(err => console.log(err));
+    //   }
+  // }
+
+  // ?? all fetches done in App.js
+
+      // version that adds to a user document
+      addItem(name) {
+        // todo: create popup asking for name of the item
+        // let newItems = this.state.items;
+        // newItems.push({ name: name });
+        // const body = { username: this.state.username, newItems: newItems };
+        console.log("addItem username: " + this.state.username);
+        const body = { username: this.state.username, newItem: { name: name } };
+
+        fetch('/api/items/insert', { // http://localhost:5000/api/items/insert
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json' },
+        }) // localhost part not necessary because of proxy in package.json
+        .then(res => res.json())
+        .then(items => {
+            // let newItems = items;
+            // newItems.push(item);
+            // let copy = [...this.state.items, item];
+            // this.setState({ username: this.state.username, items: copy });
+            this.setState({ username: this.state.username, items: items });
+
+            console.log('Item added...', items);
+        })
+        .catch(err => {
+            console.log('error: ' + err);
+        });
+
+
+    }
 
   render() {
     const { classes } = this.props;
@@ -94,10 +180,15 @@ class App extends Component {
           <UserContext.Provider
           value={this.state}>
           <Route exact path="/login_signup">
-            <LoginSignup></LoginSignup>
+            <LoginSignup setUsername={(username) => 
+                this.setUsername(username)
+            }></LoginSignup>
           </Route>
           <Route exact path="/">
-            <Items username=""></Items> {/* todo: send username to Items component */}
+            <Items username={this.state.username} 
+            items={this.state.items} 
+            addItem={(name) => this.addItem(name)}>
+              </Items> 
           </Route>
           </UserContext.Provider>
           {/* <Items user_id="Amy"></Items> */}

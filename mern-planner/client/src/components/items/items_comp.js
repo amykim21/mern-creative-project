@@ -4,6 +4,9 @@ import './items_comp.css';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Item from '../../material-ui/card.jsx';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+// import AddForm from '../../material-ui/addform.jsx';
 
 
 const styles = theme => ({
@@ -19,11 +22,19 @@ const styles = theme => ({
 
 
 // citation: https://www.youtube.com/watch?v=v0t42xBIYIs&t=1159s
-export default function Items() {
-    // const user = useContext(UserContext);
-    const { username, setUsername } = useContext(UserContext);
-    const [items, setItems] = useState([]);
+export default function Items(props) {
+// class Items extends Component {
+// const user = useContext(UserContext);
+    // const { username, setUsername } = useContext(UserContext);
+    // console.log(useContext(UserContext));
 
+    // wah
+    // const [ items, setItems ] = useState([]);
+    const [name, setName] = useState("");
+    // console.log("props.username: " + props.username);
+    // wah
+
+    // const username = props.username;
     // constructor() {
     //     super();
     //     this.state = {
@@ -33,52 +44,71 @@ export default function Items() {
     //     this.addItem = this.addItem.bind(this);
     // }
 
-    // version that adds to a user document
-    function addItem() {
-        // todo: create popup asking for name of the item
-        console.log("items_comp user: " + username);
-        const newItems = items;
-        newItems.push({ name: "test1" });
-        const body = { username: username, newItems: newItems };
-        fetch('/api/items/insert', { // http://localhost:5000/api/items/insert
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json' },
-        }) // localhost part not necessary because of proxy in package.json
-        .then(res => res.json())
-        .then(item => {
-            // let newItems = items;
-            // newItems.push(item);
-            setItems([...newItems]);
-            console.log('Item added...', item);
-        })
-        .catch(err => {
-            console.log('error: ' + err);
-        });
-    }
+    // constructor() {
+    //     super();
+    //     this.state = {
+    //         username: "",
+    //         items: []
+    //     }
+    // }
 
-    useEffect(() => {
-        console.log("inside useEffect");
+    // version that adds to a user document
+    // function addItem() {
+    //     const username = props.username;
+    //     // todo: create popup asking for name of the item
+    //     console.log("items_comp user: " + username);
+    //     const newItems = items;
+    //     console.log("item name: " + name);
+    //     newItems.push({ name: name });
+    //     const body = { username: username, newItems: newItems };
+    //     fetch('/api/items/insert', { // http://localhost:5000/api/items/insert
+    //       method: 'POST',
+    //       body: JSON.stringify(body),
+    //       headers: { 'Content-Type': 'application/json' },
+    //     }) // localhost part not necessary because of proxy in package.json
+    //     .then(res => res.json())
+    //     .then(item => {
+    //         // let newItems = items;
+    //         // newItems.push(item);
+    //         setItems([...newItems]);
+    //         console.log('Item added...', item);
+    //     })
+    //     .catch(err => {
+    //         console.log('error: ' + err);
+    //     });
+
+
+    // }
+
+    // useEffect(() => {
+    // componentDidMount() {
+        // const username = props.username;
+        // console.log("inside useEffect: " + username);
+        // !! username is "" here
         // const body = { username: username };
-        fetch('http://localhost:5000/api/items', {
-            method: 'GET',
-            // body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json',
-                username: username
-            },
-        })
-        .then(res => res.json())
-        .then(dbItems => {
-            setItems(dbItems);
-            console.log("Items fetched...", dbItems);
-        })
-        .catch(err => console.log(err));
-    }, []);
+        // fetch(`http://localhost:5000/api/items?username=${username}`, {
+        // fetch('http://localhost:5000/api/items', {
+        //     method: 'GET',
+        //     // body: JSON.stringify(body),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         username: username
+        //     },
+        // })
+        // .then(res => res.json())
+        // .then(dbItems => {
+        //     setItems([...dbItems]);
+        //     console.log("HERE: " + items);
+        //     console.log("Items fetched...", dbItems);
+        // })
+        // .catch(err => console.log(err));
+        // console.log("HERE: " + items);
+    // }
+    // }, []);
     // reference: https://stackoverflow.com/questions/53243203/react-hook-useeffect-runs-continuously-forever-infinite-loop
 
 
-
+    // render() {
         return (
             <div>
             <h2>Items</h2>
@@ -90,7 +120,31 @@ export default function Items() {
                 ></input>
                 <button type="submit">Add</button>
             </form> */}
-            <button onClick={addItem}>Add Item</button>
+            {/* <button onClick={addItem}>Add Item</button> */}
+            {/* <AddForm 
+            // onChange={(e) => console.log(e.target.value)}
+            onClick={addItem}></AddForm> */}
+            {/* <form onSubmit={() => props.addItem(name)} noValidate autoComplete="off"> */}
+            <form name="formname" onSubmit={e => {
+                e.preventDefault();
+                props.addItem(name);    
+            }}>
+            <TextField 
+            id="outlined-basic" 
+            label="Name" 
+            variant="outlined"
+            value={name}
+            onChange={(e) => setName(e.target.value)} 
+            />
+            <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    >
+                    Add Item
+                </Button>
+            </form>
             <Grid
             container
             direction="column"
@@ -98,7 +152,7 @@ export default function Items() {
             alignItems="center"
             spacing={2}
             >
-                {items.map(
+                {props.items.map(
                     item =>
                     <Grid key={item._id} item xs={12}>
                     <Item key={item._id} item={item}></Item>
@@ -109,8 +163,10 @@ export default function Items() {
 
             </div>
         );
+    // }
   
 }
+
 
 
 // export default Items;

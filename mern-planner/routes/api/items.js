@@ -6,13 +6,13 @@ const User = require('../../models/User');
 // const { User, Items } = require('../../models/User');
 
 router.post('/insert', (req, res) => {
-    const newItems = req.body.newItems;
-    // const user;
-    console.log("here: " + req.body.username);
+    // const newItems = req.body.newItems;
+    console.log("INSERT USERNAME: " + req.body.username);
     User.findOne({username: req.body.username })
     .then(user => {
-        user.items = newItems;
-        user.save().then(oldItems => res.json(oldItems));
+        user.items.push(req.body.newItem); // wah
+        // user.items = newItems; // wah
+        user.save().then(oldItems => res.json(oldItems.items));
         // Items.findOne({userId: user._id })
         // .then(oldItems => {
         //     if(oldItems == null) {
@@ -33,6 +33,8 @@ router.post('/insert', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+    console.log("req item: " + req.headers.username);
+    // User.findOne({username: req.headers.username })
     User.findOne({username: req.headers.username })
     .then(user => {
         res.json(user.items);
