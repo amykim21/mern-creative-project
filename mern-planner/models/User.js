@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema({
     password: String,
     items: [
         {
+            // wah
+            _id: {
+                type: Schema.Types.ObjectId
+            },
             name: {
                 type: String,
                 required: true
@@ -14,6 +18,11 @@ const UserSchema = new mongoose.Schema({
             date: {
                 type: Date,
                 default: Date.now
+            },
+            // wah
+            answer: {
+                type: String,
+                default: ""
             }
         }
     ],

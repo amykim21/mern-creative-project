@@ -109,6 +109,7 @@ export default function Items(props) {
 
 
     // render() {
+        console.log("items comp: " + props.items.toString());
         return (
             <div>
             <h2>Items</h2>
@@ -155,7 +156,10 @@ export default function Items(props) {
                 {props.items.map(
                     item =>
                     <Grid key={item._id} item xs={12}>
-                    <Item key={item._id} item={item}></Item>
+                    <Item key={item._id}
+                    item={item}
+                    updateItem={props.updateItem} // wah
+                    ></Item>
                     </Grid>
                 )}
 

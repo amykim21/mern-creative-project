@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Items from './components/items/items_comp';
-import LoginSignup from './material-ui/loginsignup.jsx'
+import LoginSignup from './material-ui/loginsignup.jsx';
+import FormDialog from './material-ui/formdialog';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -140,7 +141,7 @@ class App extends Component {
   // ?? all fetches done in App.js
 
       // version that adds to a user document
-      addItem(name) {
+    addItem(name) {
         // todo: create popup asking for name of the item
         // let newItems = this.state.items;
         // newItems.push({ name: name });
@@ -170,6 +171,28 @@ class App extends Component {
 
     }
 
+  updateItem(id, name, answer) {
+    // console.log("updateItem: " + this.state.username);
+    console.log("ID NAME ANS: " + id + " " + name + " " + answer);
+    const body = { username: this.state.username, _id: id, name: name, answer: answer };
+
+    fetch('/api/items/update', { // http://localhost:5000/api/items/update
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    }) // localhost part not necessary because of proxy in package.json
+    .then(res => res.json())
+    .then(items => {
+        this.setState({ username: this.state.username, items: items });
+        console.log('Item edited...', items);
+    })
+    .catch(err => {
+        console.log('error: ' + err);
+    });
+  }
+
+
+
   render() {
     const { classes } = this.props;
     return (
@@ -187,7 +210,9 @@ class App extends Component {
           <Route exact path="/">
             <Items username={this.state.username} 
             items={this.state.items} 
-            addItem={(name) => this.addItem(name)}>
+            addItem={(name) => this.addItem(name)}
+            updateItem={(id, name, answer) => this.updateItem(id, name, answer)}
+            >
               </Items> 
           </Route>
           </UserContext.Provider>
