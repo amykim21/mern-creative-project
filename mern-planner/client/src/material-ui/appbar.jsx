@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
   const classes = useStyles();
 
   // datepicker
@@ -39,7 +39,9 @@ export default function ButtonAppBar() {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = (date) => {
+    console.log("date: " + date.toString());
     setSelectedDate(date);
+    props.setPlannerDate(date);
   };
 
   return (

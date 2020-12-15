@@ -34,18 +34,13 @@ class App extends Component {
     this.state = {
        username: "",
        items: [],
-       year: 0,
-       month: 0,
-       date: 0,
-      //  setUsername: (username) => {
-      //   console.log("inside setUsername"); 
-      //   this.setState({/*...this.state, */username: username, setUsername: this.state.setUsername})
-      // }
+       date: new Date(),
     }
     this.setUsername = this.setUsername.bind(this);
     this.setItems = this.setItems.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.setPlannerDate = this.setPlannerDate.bind(this);
   }
 
   // componentWillMount
@@ -53,6 +48,15 @@ class App extends Component {
   // componentDidMount, call setUsername
 
   // or stop page from refreshing
+
+  // filterItems(item) {
+  //   const iDate = new Date(item.date);
+  //   return (
+  //     iDate.getFullYear() === this.state.date.getFullYear() &&
+  //     iDate.getMonth() === this.state.date.getMonth() &&
+  //     iDate.getDate() === this.state.date.getDate()
+  //   );
+  // }
 
   setUsername(username) {
     console.log("setusername");
@@ -67,12 +71,27 @@ class App extends Component {
         })
         .then(res => res.json())
         .then(dbItems => {
-          this.setState({ username: username, items: dbItems });
+          this.setState({ 
+            username: username, 
+            items: dbItems.filter(i => {
+              const iDate = new Date(i.date);
+              console.log("state: ", this.state.date);
+              console.log("i: ", iDate.getDate());
+              console.log("true?: ", iDate.getDate() === this.state.date.getDate());
+              return (
+                iDate.getFullYear() === this.state.date.getFullYear() &&
+                iDate.getMonth() === this.state.date.getMonth() &&
+                iDate.getDate() === this.state.date.getDate()
+              );
+            })
+          });
           console.log("Items fetched...", dbItems);
         })
         .catch(err => console.log(err));
       
   }
+
+
 
   setItems(items) {
     this.setState({username: this.state.username, items: items});
@@ -122,8 +141,21 @@ class App extends Component {
             // newItems.push(item);
             // let copy = [...this.state.items, item];
             // this.setState({ username: this.state.username, items: copy });
-            this.setState({ username: this.state.username, items: items });
-
+            this.setState({ 
+              // username: this.state.username, 
+              // items: items });
+              items: items.filter(i => {
+                const iDate = new Date(i.date);
+                console.log("state: ", this.state.date);
+                console.log("i: ", iDate.getDate());
+                console.log("true?: ", iDate.getDate() === this.state.date.getDate());
+                return (
+                  iDate.getFullYear() === this.state.date.getFullYear() &&
+                  iDate.getMonth() === this.state.date.getMonth() &&
+                  iDate.getDate() === this.state.date.getDate()
+                );
+              })
+            });
             console.log('Item added...', items);
         })
         .catch(err => {
@@ -145,7 +177,19 @@ class App extends Component {
     }) // localhost part not necessary because of proxy in package.json
     .then(res => res.json())
     .then(items => {
-        this.setState({ username: this.state.username, items: items });
+        this.setState({
+          items: items.filter(i => {
+            const iDate = new Date(i.date);
+            console.log("state: ", this.state.date);
+            console.log("i: ", iDate.getDate());
+            console.log("true?: ", iDate.getDate() === this.state.date.getDate());
+            return (
+              iDate.getFullYear() === this.state.date.getFullYear() &&
+              iDate.getMonth() === this.state.date.getMonth() &&
+              iDate.getDate() === this.state.date.getDate()
+            );
+          })
+        });
         console.log('Item edited...', items);
     })
     .catch(err => {
@@ -164,12 +208,29 @@ class App extends Component {
     }) // localhost part not necessary because of proxy in package.json
     .then(res => res.json())
     .then(items => {
-        this.setState({ username: this.state.username, items: items });
+        this.setState({ 
+          items: items.filter(i => {
+            const iDate = new Date(i.date);
+            console.log("state: ", this.state.date);
+            console.log("i: ", iDate.getDate());
+            console.log("true?: ", iDate.getDate() === this.state.date.getDate());
+            return (
+              iDate.getFullYear() === this.state.date.getFullYear() &&
+              iDate.getMonth() === this.state.date.getMonth() &&
+              iDate.getDate() === this.state.date.getDate()
+            );
+          })
+        });
         console.log('Item deleted...', items);
     })
     .catch(err => {
         console.log('error: ' + err);
     });
+  }
+
+  setPlannerDate(date) {
+    this.setState({date: date});
+    console.log("planner date: ", this.state.date);
   }
 
 
@@ -180,7 +241,9 @@ class App extends Component {
       <div className={classes.root}>
         <Router>
           <Header
-          
+            setPlannerDate={(date) => 
+              this.setPlannerDate(date)
+          }
           ></Header>
           <h1>Planner</h1>
           <UserContext.Provider
