@@ -59,9 +59,21 @@ export default function SimpleCard(props) {
         {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
           Word of the Day
         </Typography> */}
-        <Typography variant="h5" component="h2">
+
+        {/* <Typography variant="h5" component="h2">
           {props.item.name}
-        </Typography>
+        </Typography> */}
+        {props.item.completed &&
+          <Typography variant="h5" component="h2" style={{ textDecorationLine: 'line-through' }}>
+          {props.item.name}
+          </Typography>
+        }
+        {!props.item.completed &&
+          <Typography variant="h5" component="h2">
+          {props.item.name}
+          </Typography>
+        }
+
         {/* <Typography className={classes.pos} color="textSecondary">
           adjective
         </Typography> */}
