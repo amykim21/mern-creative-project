@@ -34,6 +34,7 @@ class App extends Component {
     this.state = {
        username: "",
        items: [],
+       allItems: [],
        date: new Date(),
     }
     this.setUsername = this.setUsername.bind(this);
@@ -73,6 +74,7 @@ class App extends Component {
         .then(dbItems => {
           this.setState({ 
             username: username, 
+            allItems: dbItems,
             items: dbItems.filter(i => {
               const iDate = new Date(i.date);
               console.log("state: ", this.state.date);
@@ -144,6 +146,7 @@ class App extends Component {
             this.setState({ 
               // username: this.state.username, 
               // items: items });
+              allItems: items,
               items: items.filter(i => {
                 const iDate = new Date(i.date);
                 console.log("state: ", this.state.date);
@@ -178,11 +181,10 @@ class App extends Component {
     .then(res => res.json())
     .then(items => {
         this.setState({
+          allItems: items,
           items: items.filter(i => {
             const iDate = new Date(i.date);
-            console.log("state: ", this.state.date);
-            console.log("i: ", iDate.getDate());
-            console.log("true?: ", iDate.getDate() === this.state.date.getDate());
+            
             return (
               iDate.getFullYear() === this.state.date.getFullYear() &&
               iDate.getMonth() === this.state.date.getMonth() &&
@@ -209,11 +211,10 @@ class App extends Component {
     .then(res => res.json())
     .then(items => {
         this.setState({ 
+          allItems: items,
           items: items.filter(i => {
             const iDate = new Date(i.date);
-            console.log("state: ", this.state.date);
-            console.log("i: ", iDate.getDate());
-            console.log("true?: ", iDate.getDate() === this.state.date.getDate());
+            
             return (
               iDate.getFullYear() === this.state.date.getFullYear() &&
               iDate.getMonth() === this.state.date.getMonth() &&
@@ -229,7 +230,20 @@ class App extends Component {
   }
 
   setPlannerDate(date) {
-    this.setState({date: date});
+    this.setState({
+      date: date,
+      items: this.state.allItems.filter(i => {
+        const iDate = new Date(i.date);
+        console.log("state: ", date);
+        console.log("i: ", iDate.getDate());
+        console.log("true?: ", iDate.getDate() === date.getDate());
+        return (
+          iDate.getFullYear() === date.getFullYear() &&
+          iDate.getMonth() === date.getMonth() &&
+          iDate.getDate() === date.getDate()
+        );
+      })
+    });
     console.log("planner date: ", this.state.date);
   }
 
