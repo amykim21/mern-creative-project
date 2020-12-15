@@ -84,6 +84,7 @@ class App extends Component {
     this.setUsername = this.setUsername.bind(this);
     this.setItems = this.setItems.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   // componentWillMount
@@ -191,6 +192,25 @@ class App extends Component {
     });
   }
 
+  deleteItem(id) {
+    // console.log("updateItem: " + this.state.username);
+    const body = { username: this.state.username, _id: id };
+
+    fetch('/api/items/delete', { // http://localhost:5000/api/items/delete
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    }) // localhost part not necessary because of proxy in package.json
+    .then(res => res.json())
+    .then(items => {
+        this.setState({ username: this.state.username, items: items });
+        console.log('Item deleted...', items);
+    })
+    .catch(err => {
+        console.log('error: ' + err);
+    });
+  }
+
 
 
   render() {
@@ -212,6 +232,7 @@ class App extends Component {
             items={this.state.items} 
             addItem={(name) => this.addItem(name)}
             updateItem={(id, name, answer) => this.updateItem(id, name, answer)}
+            deleteItem={(id) => this.deleteItem(id)}
             >
               </Items> 
           </Route>

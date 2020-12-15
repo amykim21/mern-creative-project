@@ -76,7 +76,6 @@ export default function SimpleCard(props) {
         <Button size="small" 
           onClick={() => 
             handleClickOpen()
-            // props.updateItem(props.item._id, null, null)
           }
         >Edit</Button>
 
@@ -111,17 +110,25 @@ export default function SimpleCard(props) {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => {
+            <Button 
+                onClick={() => {
                   console.log('inside onClick: ' + props.item._id + " " + newName + " " + newAns);
                   props.updateItem(props.item._id, newName, newAns);
                   handleClose()
-                }} color="primary">
+                }} 
+                color="primary">
               Edit
             </Button>
           </DialogActions>
         </Dialog>
 
-        <Button size="small">Delete</Button>
+        <Button 
+          size="small"
+          onClick={() => {
+            console.log('inside delete: ' + props.item._id);
+            props.deleteItem(props.item._id);
+          }}
+        >Delete</Button>
       </CardActions>
     </Card>
   );

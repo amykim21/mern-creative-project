@@ -10,24 +10,45 @@ router.post('/insert', (req, res) => {
     console.log("INSERT USERNAME: " + req.body.username);
     User.findOne({username: req.body.username })
     .then(user => {
-        user.items.push(req.body.newItem); // wah
+        req.body.newItem._id = require('mongoose').Types.ObjectId();
+        console.log("_id: " + req.body.newItem._id);
+        user.items.push(req.body.newItem);
         // user.items = newItems; // wah
         user.save().then(oldItems => res.json(oldItems.items));
-        // Items.findOne({userId: user._id })
-        // .then(oldItems => {
-        //     if(oldItems == null) {
-        //         // first time that this user is inserting an item
-        //         Items.create({
-        //             userId: user._id,
-        //             items: newItems
-        //         });
-        //     } else {
-        //         oldItems.items = newItems;
-        //         oldItems.save().then(items => res.json(items));
-        //     }
-        // })
-        // .catch(err => res.status(404).json({success: false}));
-        // res.json(newItems);    
+    })
+    .catch(err => res.status(404).json({success: false}));
+});
+
+router.post('/update', (req, res) => {
+    console.log("UPDATE id: " + req.body._id);
+    console.log("UPDATE name: " + req.body.name);
+    console.log("UPDATE answer: " + req.body.answer);
+
+    User.findOne({username: req.body.username })
+    .then(user => {
+        let item = user.items.find(i => (i._id.equals(req.body._id)));
+        console.log("item: " + item);
+        if(req.body.answer != "" && req.body.answer != undefined) {
+            item.answer = req.body.answer;
+            console.log("inside change answer");
+        }
+        if(req.body.name != "" && req.body.name != undefined) item.name = req.body.name;
+        user.save().then(newUser => res.json(newUser.items));
+    })
+    .catch(err => res.status(404).json({success: false}));
+});
+
+router.post('/delete', (req, res) => {
+    console.log("DELETE id: " + req.body._id);
+
+    User.findOne({username: req.body.username })
+    .then(user => {
+        const index = user.items.findIndex((i) => i._id.equals(req.body._id));
+        user.items.splice(index, 1);
+        console.log("index: " + index);
+        console.log("DELETE user items: " + user.items);
+        // let item = user.items.find(i => (i._id.equals(req.body._id)));        
+        user.save().then(newUser => res.json(newUser.items));
     })
     .catch(err => res.status(404).json({success: false}));
 });
@@ -37,6 +58,7 @@ router.get('/', (req, res) => {
     // User.findOne({username: req.headers.username })
     User.findOne({username: req.headers.username })
     .then(user => {
+        console.log(user.toString());
         res.json(user.items);
     })
     .catch(err => res.status(404).json({success: false}));
