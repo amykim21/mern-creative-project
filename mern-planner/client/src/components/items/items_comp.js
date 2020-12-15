@@ -23,34 +23,12 @@ const styles = theme => ({
 
 // citation: https://www.youtube.com/watch?v=v0t42xBIYIs&t=1159s
 export default function Items(props) {
-// class Items extends Component {
-// const user = useContext(UserContext);
-    // const { username, setUsername } = useContext(UserContext);
-    // console.log(useContext(UserContext));
 
     // wah
-    // const [ items, setItems ] = useState([]);
     const [name, setName] = useState("");
-    // console.log("props.username: " + props.username);
-    // wah
-
-    // const username = props.username;
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         items: []
-    //     }
-
-    //     this.addItem = this.addItem.bind(this);
-    // }
-
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         username: "",
-    //         items: []
-    //     }
-    // }
+    const [year, setYear] = useState("");
+    const [month, setMonth] = useState("");
+    const [date, setDate] = useState("");
 
     // version that adds to a user document
     // function addItem() {
@@ -109,7 +87,7 @@ export default function Items(props) {
 
 
     // render() {
-        console.log("items comp: ", props.items);
+        // console.log("items comp: ", props.items);
         return (
             <div>
             <h2>Items</h2>
@@ -128,7 +106,7 @@ export default function Items(props) {
             {/* <form onSubmit={() => props.addItem(name)} noValidate autoComplete="off"> */}
             <form name="formname" onSubmit={e => {
                 e.preventDefault();
-                props.addItem(name);    
+                props.addItem(name, year, month, date);    
             }}>
             <TextField 
             id="outlined-basic" 
@@ -136,6 +114,27 @@ export default function Items(props) {
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)} 
+            />
+            <TextField 
+            id="outlined-basic" 
+            label="Year" 
+            variant="outlined"
+            value={year}
+            onChange={(e) => setYear(e.target.value)} 
+            />
+            <TextField 
+            id="outlined-basic" 
+            label="Month" 
+            variant="outlined"
+            value={month}
+            onChange={(e) => setMonth(e.target.value)} 
+            />
+            <TextField 
+            id="outlined-basic" 
+            label="Date" 
+            variant="outlined"
+            value={date}
+            onChange={(e) => setDate(e.target.value)} 
             />
             <Button
                     type="submit"

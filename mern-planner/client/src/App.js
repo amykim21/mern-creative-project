@@ -19,50 +19,8 @@ export const UserContext = React.createContext({
 // import Item from './material-ui/card.jsx';
 // import Grid from '@material-ui/core/Grid';
 
-// changed from function App() to class App extends Component
-// function App() {
-//   return (
-//     <div className="App">
-//       <h1>Hello</h1>
-//     </div>
-//   );
-// }
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   item: {
-//     padding: theme.spacing(2),
-//     textAlign: 'center',
-//     color: theme.palette.text.secondary,
-//   },
-// }));
 
-// function App() {
-//   const classes = useStyles();
-//   return (
-//     <div className={classes.root}>
-//     <Header></Header>
-//     <Grid
-//       container
-//       direction="column"
-//       justify="center"
-//       alignItems="center"
-//       spacing={2}
-//       >
-//         <Grid item xs={12}>
-//         <Item className={classes.item}></Item>
-//         </Grid>
-//         <Grid item xs={12}>
-//         <Item></Item>
-//         </Grid>
-//       {/* <Item></Item>
-//       <Item></Item> */}
-//     </Grid>
-//     </div>
-//   );
-// }
 
 const styles = theme => ({
   root: {
@@ -76,6 +34,9 @@ class App extends Component {
     this.state = {
        username: "",
        items: [],
+       year: 0,
+       month: 0,
+       date: 0,
       //  setUsername: (username) => {
       //   console.log("inside setUsername"); 
       //   this.setState({/*...this.state, */username: username, setUsername: this.state.setUsername})
@@ -142,13 +103,13 @@ class App extends Component {
   // ?? all fetches done in App.js
 
       // version that adds to a user document
-    addItem(name) {
-        // todo: create popup asking for name of the item
-        // let newItems = this.state.items;
-        // newItems.push({ name: name });
-        // const body = { username: this.state.username, newItems: newItems };
+    addItem(name, y, m, d) {
         console.log("addItem username: " + this.state.username);
-        const body = { username: this.state.username, newItem: { name: name } };
+        console.log("ymd: ", parseInt(y), parseInt(m), parseInt(d));
+        const body = { 
+          username: this.state.username,
+          newItem: { name: name, date: new Date(parseInt(y), parseInt(m)-1, parseInt(d)) } 
+        };
 
         fetch('/api/items/insert', { // http://localhost:5000/api/items/insert
           method: 'POST',
@@ -218,7 +179,9 @@ class App extends Component {
     return (
       <div className={classes.root}>
         <Router>
-          <Header></Header>
+          <Header
+          
+          ></Header>
           <h1>Planner</h1>
           <UserContext.Provider
           value={this.state}>
@@ -230,7 +193,7 @@ class App extends Component {
           <Route exact path="/">
             <Items username={this.state.username} 
             items={this.state.items} 
-            addItem={(name) => this.addItem(name)}
+            addItem={(name, y, m, d) => this.addItem(name, y, m, d)}
             updateItem={(id, name, answer) => this.updateItem(id, name, answer)}
             deleteItem={(id) => this.deleteItem(id)}
             >

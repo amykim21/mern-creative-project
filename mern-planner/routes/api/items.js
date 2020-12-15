@@ -12,6 +12,7 @@ router.post('/insert', (req, res) => {
     .then(user => {
         req.body.newItem._id = require('mongoose').Types.ObjectId();
         console.log("_id: " + req.body.newItem._id);
+        console.log("INSERT date: " + req.body.newItem.date);
         user.items.push(req.body.newItem);
         // user.items = newItems; // wah
         user.save().then(oldItems => res.json(oldItems.items));
