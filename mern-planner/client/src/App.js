@@ -41,6 +41,7 @@ class App extends Component {
     this.setItems = this.setItems.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.completeItem = this.completeItem.bind(this);
     this.setPlannerDate = this.setPlannerDate.bind(this);
   }
 
@@ -129,7 +130,8 @@ class App extends Component {
         console.log("ymd: ", parseInt(y), parseInt(m), parseInt(d));
         const body = { 
           username: this.state.username,
-          newItem: { name: name, date: new Date(parseInt(y), parseInt(m)-1, parseInt(d)) } 
+          newItem: { name: name, date: new Date(y, m, d) } 
+          // newItem: { name: name, date: new Date(parseInt(y), parseInt(m)-1, parseInt(d)) } 
         };
 
         fetch('/api/items/insert', { // http://localhost:5000/api/items/insert
@@ -149,9 +151,6 @@ class App extends Component {
               allItems: items,
               items: items.filter(i => {
                 const iDate = new Date(i.date);
-                console.log("state: ", this.state.date);
-                console.log("i: ", iDate.getDate());
-                console.log("true?: ", iDate.getDate() === this.state.date.getDate());
                 return (
                   iDate.getFullYear() === this.state.date.getFullYear() &&
                   iDate.getMonth() === this.state.date.getMonth() &&
@@ -229,14 +228,42 @@ class App extends Component {
     });
   }
 
+  completeItem(id) {
+    const body = { username: this.state.username, _id: id};
+
+    fetch('/api/items/complete', { // http://localhost:5000/api/items/complete
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    }) // localhost part not necessary because of proxy in package.json
+    .then(res => res.json())
+    .then(items => {
+        this.setState({
+          allItems: items,
+          items: items.filter(i => {
+            const iDate = new Date(i.date);
+            return (
+              iDate.getFullYear() === this.state.date.getFullYear() &&
+              iDate.getMonth() === this.state.date.getMonth() &&
+              iDate.getDate() === this.state.date.getDate()
+            );
+          })
+        });
+        console.log('Item completed...', items);
+    })
+    .catch(err => {
+        console.log('error: ' + err);
+    });
+  }
+
   setPlannerDate(date) {
     this.setState({
       date: date,
       items: this.state.allItems.filter(i => {
         const iDate = new Date(i.date);
-        console.log("state: ", date);
-        console.log("i: ", iDate.getDate());
-        console.log("true?: ", iDate.getDate() === date.getDate());
+        // console.log("state: ", date);
+        // console.log("i: ", iDate.getDate());
+        // console.log("true?: ", iDate.getDate() === date.getDate());
         return (
           iDate.getFullYear() === date.getFullYear() &&
           iDate.getMonth() === date.getMonth() &&
@@ -270,9 +297,20 @@ class App extends Component {
           <Route exact path="/">
             <Items username={this.state.username} 
             items={this.state.items} 
-            addItem={(name, y, m, d) => this.addItem(name, y, m, d)}
+            addItem={(name, y, m, d, repeatNum, repeatDays) => {
+              let day = parseInt(d);
+              this.addItem(name, parseInt(y), parseInt(m)-1, day);
+              let i;
+              for(i = 1; i <= repeatNum; i++) {
+                day += i*repeatDays;
+                console.log("day: ", day);
+                this.addItem(name, parseInt(y), parseInt(m)-1, day);
+              }
+              // this.addItem(name, y, m, d);
+            }}
             updateItem={(id, name, answer) => this.updateItem(id, name, answer)}
             deleteItem={(id) => this.deleteItem(id)}
+            completeItem={(id) => this.completeItem(id)}
             >
               </Items> 
           </Route>

@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
             answer: {
                 type: String,
                 default: ""
+            },
+            completed: {
+                type: Boolean,
+                default: false
             }
         }
     ],

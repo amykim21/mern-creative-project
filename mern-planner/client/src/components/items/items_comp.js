@@ -24,11 +24,12 @@ const styles = theme => ({
 // citation: https://www.youtube.com/watch?v=v0t42xBIYIs&t=1159s
 export default function Items(props) {
 
-    // wah
     const [name, setName] = useState("");
     const [year, setYear] = useState("");
     const [month, setMonth] = useState("");
     const [date, setDate] = useState("");
+    const [repeatNum, setRepeatNum] = useState(0);
+    const [repeatDays, setRepeatDays] = useState(0);
 
     // version that adds to a user document
     // function addItem() {
@@ -91,22 +92,9 @@ export default function Items(props) {
         return (
             <div>
             <h2>Items</h2>
-            {/* <form onSubmit={this.addItem}>
-                <input
-                // value={todoText}
-                // onChange={(e) => setTodoText(e.target.value)}
-                type="text"
-                ></input>
-                <button type="submit">Add</button>
-            </form> */}
-            {/* <button onClick={addItem}>Add Item</button> */}
-            {/* <AddForm 
-            // onChange={(e) => console.log(e.target.value)}
-            onClick={addItem}></AddForm> */}
-            {/* <form onSubmit={() => props.addItem(name)} noValidate autoComplete="off"> */}
             <form name="formname" onSubmit={e => {
                 e.preventDefault();
-                props.addItem(name, year, month, date);    
+                props.addItem(name, year, month, date, repeatNum, repeatDays);    
             }}>
             <TextField 
             id="outlined-basic" 
@@ -136,6 +124,20 @@ export default function Items(props) {
             value={date}
             onChange={(e) => setDate(e.target.value)} 
             />
+             <TextField 
+            id="outlined-basic" 
+            label="Repeat x Times" 
+            variant="outlined"
+            value={repeatNum}
+            onChange={(e) => setRepeatNum(e.target.value)} 
+            />
+            <TextField 
+            id="outlined-basic" 
+            label="Every y Days" 
+            variant="outlined"
+            value={repeatDays}
+            onChange={(e) => setRepeatDays(e.target.value)} 
+            />
             <Button
                     type="submit"
                     fullWidth
@@ -159,6 +161,7 @@ export default function Items(props) {
                     item={item}
                     updateItem={props.updateItem}
                     deleteItem={props.deleteItem}
+                    completeItem={props.completeItem}
                     ></Item>
                     </Grid>
                 )}

@@ -15,7 +15,11 @@ router.post('/insert', (req, res) => {
         console.log("INSERT date: " + req.body.newItem.date);
         user.items.push(req.body.newItem);
         // user.items = newItems; // wah
-        user.save().then(oldItems => res.json(oldItems.items));
+        user.markModified('items');
+        user.save().then(oldItems => {
+            res.json(oldItems.items);
+            console.log("INSERT returningitems: ", oldItems.items);
+        });
     })
     .catch(err => res.status(404).json({success: false}));
 });
@@ -49,6 +53,19 @@ router.post('/delete', (req, res) => {
         console.log("index: " + index);
         console.log("DELETE user items: " + user.items);
         // let item = user.items.find(i => (i._id.equals(req.body._id)));        
+        user.save().then(newUser => res.json(newUser.items));
+    })
+    .catch(err => res.status(404).json({success: false}));
+});
+
+router.post('/complete', (req, res) => {
+    console.log("COMPLETE id: " + req.body._id);
+
+    User.findOne({username: req.body.username })
+    .then(user => {
+        let item = user.items.find(i => (i._id.equals(req.body._id)));
+        console.log("item: " + item);
+        item.completed = true;
         user.save().then(newUser => res.json(newUser.items));
     })
     .catch(err => res.status(404).json({success: false}));

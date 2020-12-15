@@ -129,6 +129,13 @@ export default function SimpleCard(props) {
             props.deleteItem(props.item._id);
           }}
         >Delete</Button>
+        <Button 
+          size="small"
+          onClick={() => {
+            console.log('inside complete: ' + props.item._id);
+            props.completeItem(props.item._id);
+          }}
+        >Mark Complete</Button>
       </CardActions>
     </Card>
   );
