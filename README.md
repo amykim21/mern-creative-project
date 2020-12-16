@@ -3,4 +3,6 @@
 
 REPLACE-THIS-TEXT-WITH-YOUR-PARTNERS-STUDENT-ID-IF-WORKING-IN-A-GROUP
 
-http://ec2-3-18-104-160.us-east-2.compute.amazonaws.com:3456
+Creative Portion:
+1) Allow users to mark an item as "complete".  A completed item will have its name crossed out.
+2) Allow users to make items that recur every x days, y times
