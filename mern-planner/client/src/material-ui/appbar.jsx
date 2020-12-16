@@ -7,8 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { useHistory } from "react-router-dom"; // for redirecting to login page after logout
 
-// import DatePicker from './material-ui/datepicker.jsx';
+
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar(props) {
+  const history = useHistory();
   const classes = useStyles();
 
   // datepicker
@@ -68,6 +70,10 @@ export default function ButtonAppBar(props) {
             />
           </Grid>
           </MuiPickersUtilsProvider>
+          <Button 
+          color="inherit"
+          onClick={() => history.push('/login_signup')}
+          >Log Out</Button>
         </Toolbar>
       </AppBar>
     </div>
