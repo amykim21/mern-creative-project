@@ -1,0 +1,21 @@
+.completed {
+    /* minWidth: 200, */
+    background-color: #ffffff;
+    width: 100%;
+    animation-name: example;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+/* citation: https://www.w3schools.com/css/css3_animations.asp */
+@keyframes example {
+    from {background-color: #ffffff;}
+    to {background-color: #90ee90;}
+}
+ /* end of citation */
+
+.incomplete {
+    /* minWidth: 200, */
+    background-color: #ffffff;
+    width: 100%;
+}
+
