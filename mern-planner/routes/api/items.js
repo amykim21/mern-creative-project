@@ -6,19 +6,31 @@ const User = require('../../models/User');
 // const { User, Items } = require('../../models/User');
 
 router.post('/insert', (req, res) => {
-    // const newItems = req.body.newItems;
     console.log("INSERT USERNAME: " + req.body.username);
+    console.log("INSERT body: ", req.body);
     User.findOne({username: req.body.username })
     .then(user => {
         req.body.newItem._id = require('mongoose').Types.ObjectId();
         console.log("_id: " + req.body.newItem._id);
         console.log("INSERT date: " + req.body.newItem.date);
         user.items.push(req.body.newItem);
-        // user.items = newItems; // wah
-        user.markModified('items');
-        user.save().then(oldItems => {
-            res.json(oldItems.items);
-            console.log("INSERT returningitems: ", oldItems.items);
+
+        // handle repeats
+        let ogDate = new Date(req.body.newItem.date);
+        const repeatNum = req.body.repeatNum;
+        const repeatDays = req.body.repeatDays;
+        let j;
+        for(j = 1; j <= repeatNum; j++) {
+            let repeatItem = {...req.body.newItem};
+            repeatItem._id = require('mongoose').Types.ObjectId();
+            repeatItem.date = new Date(ogDate.getFullYear(), ogDate.getMonth(), ogDate.getDate()+j*repeatDays);
+            user.items.push(repeatItem);
+        }
+        console.log("INSERT user.items: ", user.items);
+    
+        user.save().then(user => {
+            res.json(user.items);
+            console.log("INSERT returningitems: ", user.items);
         });
     })
     .catch(err => res.status(404).json({success: false}));

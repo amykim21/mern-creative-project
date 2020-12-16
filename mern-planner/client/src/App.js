@@ -125,12 +125,14 @@ class App extends Component {
   // ?? all fetches done in App.js
 
       // version that adds to a user document
-    addItem(name, y, m, d) {
+    addItem(name, y, m, d, repeatNum, repeatDays) { // wahh
         console.log("addItem username: " + this.state.username);
         console.log("ymd: ", parseInt(y), parseInt(m), parseInt(d));
-        const body = { 
+        const body = {
           username: this.state.username,
-          newItem: { name: name, date: new Date(y, m, d) } 
+          newItem: { name: name, date: new Date(y, m, d) },
+          repeatNum: repeatNum, // wahh
+          repeatDays: repeatDays // wahh
           // newItem: { name: name, date: new Date(parseInt(y), parseInt(m)-1, parseInt(d)) } 
         };
 
@@ -259,6 +261,7 @@ class App extends Component {
   setPlannerDate(date) {
     this.setState({
       date: date,
+      // allItems: ,
       items: this.state.allItems.filter(i => {
         const iDate = new Date(i.date);
         // console.log("state: ", date);
@@ -298,14 +301,28 @@ class App extends Component {
             <Items username={this.state.username} 
             items={this.state.items} 
             addItem={(name, y, m, d, repeatNum, repeatDays) => {
-              let day = parseInt(d);
-              this.addItem(name, parseInt(y), parseInt(m)-1, day);
-              let i;
-              for(i = 1; i <= repeatNum; i++) {
-                day += i*repeatDays;
-                console.log("day: ", day);
-                this.addItem(name, parseInt(y), parseInt(m)-1, day);
-              }
+              this.addItem(name, parseInt(y), parseInt(m)-1, parseInt(d), parseInt(repeatNum), parseInt(repeatDays));
+              // let day = parseInt(d);
+              // let arr = [day];
+              // let i;
+              // for(i = 0; i < parseInt(repeatNum); i++) {
+              //   day += parseInt(repeatDays);
+              //   arr.push(day);
+              // }
+              // console.log("arr: ", arr);
+              // arr.forEach(async (i) => {
+              //   await this.addItem(name, parseInt(y), parseInt(m)-1, i);
+              // });
+
+
+              // let day = parseInt(d);
+              // this.addItem(name, parseInt(y), parseInt(m)-1, day);
+              // let i;
+              // for(i = 1; i <= repeatNum; i++) {
+              //   day += i*repeatDays;
+              //   console.log("day: ", day);
+              //   this.addItem(name, parseInt(y), parseInt(m)-1, day);
+              // }
               // this.addItem(name, y, m, d);
             }}
             updateItem={(id, name, answer) => this.updateItem(id, name, answer)}
