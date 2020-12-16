@@ -1,3 +1,4 @@
+// modified from citation: https://material-ui.com/components/cards/#card
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -39,7 +40,6 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-//   const bull = <span className={classes.bullet}>•</span>;
   const [open, setOpen] = React.useState(false);
   const [newName, setNewName] = React.useState("");
   const [newAns, setNewAns] = React.useState("");
@@ -56,13 +56,6 @@ export default function SimpleCard(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
-        </Typography> */}
-
-        {/* <Typography variant="h5" component="h2">
-          {props.item.name}
-        </Typography> */}
         {props.item.completed &&
           <Typography variant="h5" component="h2" style={{ textDecorationLine: 'line-through' }}>
           {props.item.name}
@@ -74,9 +67,6 @@ export default function SimpleCard(props) {
           </Typography>
         }
 
-        {/* <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography> */}
         <Typography variant="body2" component="p">
           {props.item.date.toString().substring(0, 10)}
         </Typography>
@@ -124,7 +114,6 @@ export default function SimpleCard(props) {
             </Button>
             <Button 
                 onClick={() => {
-                  console.log('inside onClick: ' + props.item._id + " " + newName + " " + newAns);
                   props.updateItem(props.item._id, newName, newAns);
                   handleClose()
                 }} 
@@ -137,14 +126,12 @@ export default function SimpleCard(props) {
         <Button 
           size="small"
           onClick={() => {
-            console.log('inside delete: ' + props.item._id);
             props.deleteItem(props.item._id);
           }}
         >Delete</Button>
         <Button 
           size="small"
           onClick={() => {
-            console.log('inside complete: ' + props.item._id);
             props.completeItem(props.item._id);
           }}
         >Mark Complete</Button>
@@ -152,3 +139,5 @@ export default function SimpleCard(props) {
     </Card>
   );
 }
+
+// end of citation

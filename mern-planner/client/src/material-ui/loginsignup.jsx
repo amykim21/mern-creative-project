@@ -1,5 +1,5 @@
-// citation: https://material-ui.com/getting-started/templates/
-import React, { useState, useContext } from 'react';
+// modified from citation: https://material-ui.com/getting-started/templates/
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom"; // for redirecting to home page after login/signup
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -116,7 +116,6 @@ export default function LoginSignup(props) {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      {/* <Grid item xs={false} sm={4} md={7} className={classes.image} /> */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -150,10 +149,6 @@ export default function LoginSignup(props) {
               autoComplete="current-password"
               onChange={(e) => setLoginPassword(e.target.value)}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -163,18 +158,6 @@ export default function LoginSignup(props) {
             >
               Log In
             </Button>
-            {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
             <Box mt={5}>
               <Copyright />
             </Box>
@@ -215,10 +198,6 @@ export default function LoginSignup(props) {
               autoComplete="current-password"
               onChange={(e) => setSignupPassword(e.target.value)}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -228,18 +207,6 @@ export default function LoginSignup(props) {
             >
               Sign Up
             </Button>
-            {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
             <Box mt={5}>
               <Copyright />
             </Box>

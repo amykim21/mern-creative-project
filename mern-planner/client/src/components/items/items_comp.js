@@ -1,5 +1,4 @@
 import React, { Component, useState, useContext, useEffect } from 'react';
-import './items_comp.css';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Item from '../../material-ui/card.jsx';
@@ -20,7 +19,6 @@ const styles = theme => ({
   });
 
 
-// citation: https://www.youtube.com/watch?v=v0t42xBIYIs&t=1159s
 export default function Items(props) {
 
     const [name, setName] = useState("");
@@ -30,7 +28,7 @@ export default function Items(props) {
     const [repeatNum, setRepeatNum] = useState(0);
     const [repeatDays, setRepeatDays] = useState(0);
 
-   
+   // citation: https://material-ui.com/components/text-fields/
     return (
         <div>
         <h2>Items</h2>
@@ -115,5 +113,3 @@ export default function Items(props) {
   
 }
 
-
-// end of citation

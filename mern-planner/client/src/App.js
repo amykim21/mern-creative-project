@@ -42,10 +42,8 @@ class App extends Component {
 
   setUsername(username) {
     console.log("setusername");
-    // this.setState({username: username, items: this.state.items});
     fetch('/api/items', {
             method: 'GET',
-            // body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
                 username: username
@@ -58,9 +56,6 @@ class App extends Component {
             allItems: dbItems,
             items: dbItems.filter(i => {
               const iDate = new Date(i.date);
-              console.log("state: ", this.state.date);
-              console.log("i: ", iDate.getDate());
-              console.log("true?: ", iDate.getDate() === this.state.date.getDate());
               return (
                 iDate.getFullYear() === this.state.date.getFullYear() &&
                 iDate.getMonth() === this.state.date.getMonth() &&
@@ -80,9 +75,7 @@ class App extends Component {
     this.setState({username: this.state.username, items: items});
   }
 
-    addItem(name, y, m, d, repeatNum, repeatDays) { // wahh
-        console.log("addItem username: " + this.state.username);
-        console.log("ymd: ", parseInt(y), parseInt(m), parseInt(d));
+    addItem(name, y, m, d, repeatNum, repeatDays) {
         const body = {
           username: this.state.username,
           newItem: { name: name, date: new Date(y, m, d) },
